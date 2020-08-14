@@ -48,7 +48,7 @@ export default function App () {
   }
 
 
-  persistResults = async (newItems) => {
+  const persistResults = async (newItems) => {
 
     // get current persisted list items
     const curItems = await AsyncStorage.getItem('saved_list');
