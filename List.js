@@ -31,13 +31,14 @@ export default function App () {
     if (curItems === null) {
       // no current items in AsyncStorage - fetch initial items
       json = fetchResults(0);
+
+      // set initial list in AsyncStorage
+      await AsyncStorage.setItem('saved_list', JSON.stringify(json));
+
     } else {
       // current items exist - format as a JSON object
       json = JSON.parse(curItems);
     }
-
-    // set initial list in AsyncStorage
-    AsyncStorage.setItem('saved_list', JSON.stringify(json));
 
     // update Redux store (Redux will ignore if `json` is same as current list items)
     dispatch({
@@ -62,7 +63,7 @@ export default function App () {
       json.push(item);
     }
 
-    // // persist updated item list
+    // persist updated item list
     await AsyncStorage.setItem('saved_list', JSON.stringify(json));
 
     // update Redux store
