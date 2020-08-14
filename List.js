@@ -22,24 +22,24 @@ export default function App () {
 
   const initialiseList = async () => {
 
-    // this is done for testing purposes, to reset AsyncStorage on every app refresh
+    // this is done for testing purposes - reset AsyncStorage on every app refresh
     await AsyncStorage.removeItem('saved_list');
 
-    // get current persisted list items
+    // get current persisted list items (will be null if above line is not removed)
     const curItems = await AsyncStorage.getItem('saved_list');
 
     if (curItems === null) {
-      // fetch initial items
+      // no current items in AsyncStorage - fetch initial items
       json = fetchResults(0);
     } else {
-      // format as a JSON object
+      // current items exist - format as a JSON object
       json = JSON.parse(curItems);
     }
 
     // set initial list in AsyncStorage
     AsyncStorage.setItem('saved_list', JSON.stringify(json));
 
-    // update Redux store
+    // update Redux store (Redux will ignore if `json` is same as current list items)
     dispatch({
       type: 'UPDATE_LIST_RESULTS',
       items: json
