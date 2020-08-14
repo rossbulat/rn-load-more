@@ -10,6 +10,7 @@ export default function App () {
 
   const dispatch = useDispatch();
   const listItems = useSelector(state => state.list.items);
+  const totalItems = Array.isArray(listItems) ? listItems.length : 0;
   const [loadingMore, setLoadingMore] = useState(false);
   const [allLoaded, setAllLoaded] = useState(false);
 
@@ -83,7 +84,7 @@ export default function App () {
     setLoadingMore(true);
 
     // get next results
-    const newItems = fetchResults(listItems.length);
+    const newItems = fetchResults(totalItems);
 
     await delay(1000);
 
@@ -102,7 +103,7 @@ export default function App () {
         contentContainerStyle={styles.list}
         ListHeaderComponent={
           <View style={styles.header}>
-            <Text style={styles.title}>Displaying {listItems.length} Items</Text>
+            <Text style={styles.title}>Displaying {totalItems} Items</Text>
           </View>
         }
         ListFooterComponent={
