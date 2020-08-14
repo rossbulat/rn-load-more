@@ -47,7 +47,7 @@ export default function App () {
   }
 
 
-  persistResultsAsync = async (newItems) => {
+  persistResults = async (newItems) => {
 
     // get current persisted list items
     const curItems = await AsyncStorage.getItem('saved_list');
@@ -93,7 +93,7 @@ export default function App () {
       setAllLoaded(true);
     } else {
       // process the newly fetched items
-      await persistResultsAsync(newItems);
+      await persistResults(newItems);
     }
 
     // load more complete, set loading more false
