@@ -96,7 +96,7 @@ export default function App () {
       await persistResults(newItems);
     }
 
-    // load more complete, set loading more false
+    // load more complete, set loading more to false
     setLoadingMore(false);
   }
 
