@@ -1,4 +1,4 @@
-﻿const RECORDS_PER_FETCH = 10;
+﻿const RECORDS_PER_FETCH = 5;
 
 export const data = [
   {

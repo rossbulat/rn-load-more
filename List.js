@@ -22,22 +22,19 @@ export default function App () {
 
   const initialiseList = async () => {
 
+    // this is done for testing purposes, to reset AsyncStorage on every app refresh
     await AsyncStorage.removeItem('saved_list');
 
     // get current persisted list items
     const curItems = await AsyncStorage.getItem('saved_list');
 
-    // format as a JSON object
     if (curItems === null) {
-
       // fetch initial items
       json = fetchResults(0);
-
     } else {
+      // format as a JSON object
       json = JSON.parse(curItems);
     }
-
-    json = fetchResults(0);
 
     // set initial list in AsyncStorage
     AsyncStorage.setItem('saved_list', JSON.stringify(json));
@@ -78,22 +75,28 @@ export default function App () {
 
   const loadMoreResults = async info => {
 
+    // if already loading more, or all loaded, return
     if (loadingMore || allLoaded)
       return
 
+    // set loading more (also updates footer text)
     setLoadingMore(true);
 
     // get next results
     const newItems = fetchResults(totalItems);
 
+    // mimic server-side API request and delay execution for 1 second
     await delay(1000);
 
-    await persistResultsAsync(newItems);
-
     if (newItems.length === 0) {
+      // if no new items were fetched, set all loaded to true to prevent further requests
       setAllLoaded(true);
+    } else {
+      // process the newly fetched items
+      await persistResultsAsync(newItems);
     }
 
+    // load more complete, set loading more false
     setLoadingMore(false);
   }
 
